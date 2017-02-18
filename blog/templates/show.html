@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h3>Post</h3>
+
+<div class="btn-group">
+  <a href="{{url_for('.edit', id=post.id)}}" class="btn btn-primary btn-sm">
+    <i class="glyphicon glyphicon-edit"></i>
+    Edit post
+  </a>
+  <a href="{{url_for('.delete', id=post.id)}}" class="btn btn-danger btn-sm">
+    <i class="glyphicon glyphicon-trash"></i>
+    Delete post
+  </a>
+</div>
+
+<div class="media">
+  <div class="media-left">
+    <img class="post-image" src="http://placekitten.com/g/128/192">
+  </div>
+  <div class="media-body">
+    <h4 class="post-title">
+      {{post.title}}
+      <!-- <small>{{post.publishedDate}}</small> -->
+    </h4>
+    <!-- <h5 class="post-author">By {{post.author|default('Unknown', True)}}</h5> -->
+    <p class="post-content">{{post.content}}</p>
+  </div>
+</div>
+
+{% endblock %}
