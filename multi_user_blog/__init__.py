@@ -22,14 +22,18 @@ def create_app(config, debug=False, testing=False, config_overrides=None):
         model = get_model()
         model.init_app(app)
 
+    # Register the Auth blueprint
+    from .auth import auth
+    app.register_blueprint(auth, url_prefix='/auth')
+
     # Register the Blog CRUD blueprint.
-    from .crud import crud
-    app.register_blueprint(crud, url_prefix='/blog')
+    from .blog import blog
+    app.register_blueprint(blog, url_prefix='/blog')
 
     # Add a default root route.
     @app.route("/")
     def index():
-        return redirect(url_for('crud.index'))
+        return redirect(url_for('blog.index'))
 
     # Add an error handler. This is useful for debugging the live application,
     # however, you should disable the output of the exception for production

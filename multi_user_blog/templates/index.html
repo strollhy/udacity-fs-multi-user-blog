@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <h3>Posts</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <a href="{{url_for('.add')}}" class="btn btn-primary btn-sm">
+      <i class="glyphicon glyphicon-edit"></i>
+      Add post
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="list-group">
+    {% for post in posts %}
+      <li class="list-group-item">
+        <a href="{{url_for('.show', id=post.id)}}">{{post.title}}</a>
+      </li>
+    {% else %}
+    <p>No Posts found</p>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% if next_page_token %}
+<nav>
+  <ul class="pager">
+    <li><a href="?page_token={{next_page_token}}">Next</a></li>
+  </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

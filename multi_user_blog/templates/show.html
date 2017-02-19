@@ -2,9 +2,8 @@
 
 {% block content %}
 
-<h3>Post</h3>
-
 <div class="btn-group">
+  {% if useraccess %}
   <a href="{{url_for('.edit', id=post.id)}}" class="btn btn-primary btn-sm">
     <i class="glyphicon glyphicon-edit"></i>
     Edit post
@@ -13,18 +12,20 @@
     <i class="glyphicon glyphicon-trash"></i>
     Delete post
   </a>
+  {% endif %}
 </div>
 
 <div class="media">
   <div class="media-left">
-    <img class="post-image" src="http://placekitten.com/g/128/192">
+    <img class="post-image" src="https://api.adorable.io/avatars/128/{{post.user.name}}.png">
   </div>
   <div class="media-body">
     <h4 class="post-title">
       {{post.title}}
-      <!-- <small>{{post.publishedDate}}</small> -->
+      <!-- <small>{{post.created}}</small> -->
+      <i class="glyphicon glyphicon-thumbs-up" style="color: blue"></i>
     </h4>
-    <!-- <h5 class="post-author">By {{post.author|default('Unknown', True)}}</h5> -->
+    <h5 class="post-author">By {{post.user.name|default('Unknown', True)}}</h5>
     <p class="post-content">{{post.content}}</p>
   </div>
 </div>

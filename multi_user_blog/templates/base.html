@@ -13,8 +13,20 @@
           <div class="navbar-brand">Blog</div>
         </div>
         <ul class="nav navbar-nav">
-          <li><a href="/blog">Posts</a></li>
+          <li><a href="/blog">Home</a></li>
         </ul>
+        {% if username %}
+        <ul class="nav navbar-nav">
+          <li><a href="/blog/mypost">My posts</a></li>
+        </ul>
+        <div class="navbar-text navbar-right">
+          <span>Welcome, {{username}}(<a href="{{url_for('auth.logout')}}">logout</a>)</span>
+        </div>
+        {% else %}
+        <div class="navbar-text navbar-right">
+            <span><a href="/auth/login">Login</a> | <a href="/auth/signup">Signup</a></span>
+          {% endif %}
+        </div>
       </div>
     </div>
     <div class="container">
