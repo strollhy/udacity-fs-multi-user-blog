@@ -15,7 +15,10 @@
     <textarea name="content" id="content" class="form-control">{{post.content}}</textarea>
   </div>
 
-  <button type="submit" class="btn btn-success">Save</button>
+  <button type="submit" class="btn btn-primary">Save</button>
+  <a href="{{url_for('.show', id=post.id)}}" class="btn btn-default">
+    Cancel
+  </a>
 </form>
 
 {% endblock %}

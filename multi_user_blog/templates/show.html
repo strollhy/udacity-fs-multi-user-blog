@@ -2,31 +2,93 @@
 
 {% block content %}
 
-<div class="btn-group">
-  {% if useraccess %}
-  <a href="{{url_for('.edit', id=post.id)}}" class="btn btn-primary btn-sm">
-    <i class="glyphicon glyphicon-edit"></i>
-    Edit post
-  </a>
-  <a href="{{url_for('.delete', id=post.id)}}" class="btn btn-danger btn-sm">
-    <i class="glyphicon glyphicon-trash"></i>
-    Delete post
-  </a>
-  {% endif %}
-</div>
-
 <div class="media">
   <div class="media-left">
-    <img class="post-image" src="https://api.adorable.io/avatars/128/{{post.user.name}}.png">
+    <img class="post-image" src="https://api.adorable.io/avatars/128/{{post.username}}.png">
+    <h5 class="text-center">{{post.username|d('Guest', True)}}</h5>
   </div>
   <div class="media-body">
-    <h4 class="post-title">
+    <h3 class="media-heading">
       {{post.title}}
       <!-- <small>{{post.created}}</small> -->
-      <i class="glyphicon glyphicon-thumbs-up" style="color: blue"></i>
-    </h4>
-    <h5 class="post-author">By {{post.user.name|default('Unknown', True)}}</h5>
-    <p class="post-content">{{post.content}}</p>
+      {% if post.user_id == user_id %}
+      <div class="btn-group">
+        <a href="{{url_for('.edit', id=post.id)}}" class="btn btn-sm">
+          <i class="fa fa-pencil"></i>
+          Edit
+        </a>
+        <a href="{{url_for('.delete', id=post.id)}}" class="btn btn-sm">
+          <i class="fa fa-trash-o"></i>
+          Delete
+        </a>
+      </div>
+      {% endif %}
+    </h3>
+
+    <div class="media-body">
+      <p class="post-content">{{post.content}}</p>  
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <hr class="col-md-12">
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    {% if post.user_id == user_id %}
+    <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+      Like
+      ({{post.like|d(0, True)}})
+    {% else %}
+    <a href="{{url_for('.like', id=post.id)}}"" class="btn btn-md">
+      <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+      Like
+      ({{post.like|d(0, True)}})
+    </a>
+    {% endif %}
+    <a href="{{url_for('.add_comment', id=post.id)}}" class="btn btn-md">
+      <i class="fa fa-comment-o" aria-hidden="true"></i>
+      Comment
+    </a>
+  </div>
+</div>
+
+<div class="row">
+  <hr class="col-md-12">
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <ul class="media-list">
+      {% for comment in post.comments %}
+      <li class="media">
+        <div class="media-left">
+          <img class="post-image" src="https://api.adorable.io/avatars/32/{{comment.username|d('Guest', True)}}.png">
+        </div>
+        <div class="media-body">
+          <h5 class="media-heading">
+            <a href="#">
+              {{comment.username|d('Guest', True)}}
+            </a>
+
+            {% if comment.user_id == user_id %}
+            <div class="btn-group pull-right">
+              <a href="{{url_for('.edit_comment', id=comment.id)}}" class="btn btn-sm">
+                <i class="fa fa-pencil"></i>
+              </a>
+              <a href="{{url_for('.delete_comment', id=comment.id)}}" class="btn btn-sm">
+                <i class="fa fa-trash-o"></i>
+              </a>
+            </div>
+            {% endif %}
+          </h5>
+          <p>{{comment.content}}</p>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
 </div>
 

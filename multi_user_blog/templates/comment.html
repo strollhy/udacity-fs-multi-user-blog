@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h3>{{action}} comment</h3>
+
+<form method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="author">Content</label>
+    <textarea name="content" id="content" class="form-control">{{comment.content}}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-success">Save</button>
+  <a href="{{url_for('.show', id=comment.post_id)}}" class="btn btn-default">
+    Cancel
+  </a>
+</form>
+
+{% endblock %}

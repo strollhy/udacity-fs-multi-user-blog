@@ -4,30 +4,38 @@
 
 <div class="row">
   <div class="col-md-12">
-    <h3>Posts</h3>
+    <h3>
+      Posts
+      {% if username %}
+      <a href="{{url_for('.add')}}" class="btn btn-primary btn-sm">
+        Add post
+      </a>
+      {% endif %}
+    </h3>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-12">
-    <a href="{{url_for('.add')}}" class="btn btn-primary btn-sm">
-      <i class="glyphicon glyphicon-edit"></i>
-      Add post
-    </a>
-  </div>
+  <hr class="col-md-12">
 </div>
 
 <div class="row">
   <div class="col-md-12">
-    <ul class="list-group">
     {% for post in posts %}
-      <li class="list-group-item">
-        <a href="{{url_for('.show', id=post.id)}}">{{post.title}}</a>
+    <ul class="media-list">
+      <li class="media">
+        <div class="media-left">
+          <img class="post-image" src="https://api.adorable.io/avatars/32/{{post.username|default('Guest', True)}}.png">
+        </div>
+        <div class="media-body">
+          <h5 class="media-heading">{{post.username|default('Guest', True)}}</h5>
+          <a href="{{url_for('.show', id=post.id)}}">{{post.title}}</a>
+        </div>
       </li>
+    </ul>
     {% else %}
     <p>No Posts found</p>
     {% endfor %}
-    </ul>
   </div>
 </div>
 

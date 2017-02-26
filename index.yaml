@@ -1,0 +1,7 @@
+indexes:
+- kind: Post
+  properties:
+  - name: title
+  - name: user_id
+  - name: created
+    direction: desc

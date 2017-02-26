@@ -1,9 +1,8 @@
-from multi_user_blog import get_model
-from flask import Blueprint, session, redirect, render_template, request, url_for
+from models import User
+from flask import Blueprint, current_app, session, redirect, render_template, request, url_for
 
 
 auth = Blueprint('auth', __name__, static_folder='static')
-auth.secret_key = 'A0Zr98j/3yX R~STRO!jmN]LWX/,?RT'
 
 
 def username():
@@ -18,14 +17,14 @@ def user_id():
 def signup():
     if request.method == 'POST':
         data = request.form.to_dict(flat=True)
-        user = get_model().signup(data)
+        user = User.signup(data)
 
         if user:
             session['username'] = user['name']
             session['user_id'] = user['id']
             return redirect(url_for('blog.index'))
         else:
-            return render_template('signup.html', data=data, error=True), 403
+            return render_template('signup.html', data=data, error="User already exists."), 403
     elif session.get('username'):
         return redirect(url_for('blog.index'))
 
@@ -36,7 +35,7 @@ def signup():
 def login():
     if request.method == 'POST':
         data = request.form.to_dict(flat=True)
-        user = get_model().login(data)
+        user = User.login(data)
 
         if user:
             session['username'] = user['name']
